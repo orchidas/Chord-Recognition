@@ -54,8 +54,8 @@ def CQT_fast(x,fs,bins,fmin,fmax,M):
 	cqt = np.dot(ft, sparKernel)
 	ft = fft(x,nfft*(2**M))
 	#calculate harmonic power spectrum
-	# harm_pow = HPS(ft,M)
-	# cqt = np.dot(harm_pow, sparKernel)
+	#harm_pow = HPS(ft,M)
+	#cqt = np.dot(harm_pow, sparKernel)
 	return cqt
 
 
@@ -82,60 +82,17 @@ def PCP(cqt,bins,M):
 	return CH
 
 
-def compute_chroma(s,fs):
-#downsample sampling frequency to 11025Hz
-	x = s[::4]
-	x = x[:,1]
-	fs = int(fs/4)
-
-	#framing audio, window length = 8192, hop size = 1024
-	nfft = 8192
-	hop_size = 1024
-	nFrames = int(np.round(len(x)/(nfft-hop_size)))
-	#zero padding to make signal length long enough to have nFrames
-	x = np.append(x, np.zeros(nfft))
-	xFrame = np.empty((nfft, nFrames))
-	start = 0    
-	for n in range(nFrames):
-		xFrame[:,n] = x[start:start+nfft] 
-		start = start + nfft - hop_size 
+def compute_chroma(x,fs):
 
 	fmin = 96
 	fmax = 5250
 	bins = 12
 	M = 3
 	nOctave = np.int32(np.ceil(np.log2(fmax/fmin)))
-	CH = np.empty((bins,nFrames))
-	for n in range(nFrames):
-		#compute constant Q transform
-		cqt_fast = CQT_fast(xFrame[:,n],fs,bins,fmin,fmax,M)
-		plt.figure(1)
-		plt.plot(np.absolute(cqt_fast))
-		#compute pitch class profile
-		CH[:,n] = PCP(np.absolute(cqt_fast), bins, nOctave)
-		plt.figure(2)
-		plt.plot(CH[:,n])
-
-	plt.figure(1)
-	plt.xlabel('Bin Number')
-	plt.ylabel('Magnitude of Q transform')
-	plt.title('CQT')
-
-	plt.figure(2)
-	notes = ['G','G#','A','A#','B','C','C#','D','D#','E','F','F#']
-	plt.xticks(np.arange(bins),notes)
-	plt.title('Pitch Class Profile')
-	plt.xlabel('Note')
-
-	#averaged and normalized chromagram
-	chroma = np.mean(CH,axis = 1)
-	chroma /= np.max(chroma)
-	plt.figure(3)
-	plt.plot(chroma)
-	plt.xticks(np.arange(bins),notes)
-	plt.title('Averaged PCP')
-	plt.xlabel('Note')
-	plt.show()
-
-	return chroma
+	CH = np.zeros(bins)
+	#Compute constant Q transform
+	cqt_fast = CQT_fast(x,fs,bins,fmin,fmax,M)
+	#get Pitch Class Profile
+	CH = PCP(np.absolute(cqt_fast), bins, nOctave)
+	return CH
 
