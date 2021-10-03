@@ -6,10 +6,10 @@ by computing the <i>Constant Q Transform</i>. Two methods are used for classific
 <ol>
 <li>
 Template matching - The pitch profile class is correlated with 24 major and minor chords, and the chord with highest correlation is identified.
-Details given in the paper <b>Automatic Chord Recognition from Audio Using Enhanced Pitch
-Class Profile </b> - <i>Kyogu Lee, CCRMA Stanford</i>. Works well for chords played by solo instruments.
+Details given in the paper <i><a href = "https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.93.4283&rep=rep1&type=pdf">Automatic Chord Recognition from Audio Using Enhanced Pitch
+  Class Profile</a></i> - Kyogu Lee in Proc. of ICMC, 2006. 
 </li>
 <li>
-Hidden Markov Model - HMM is trained based on music theory according to the paper <b>A Robust Mid-level Representation for Harmonic Content in Music 
-Signals</b> - <i>Juan P. Bello, MARL NYU</i>. Viterbi decoding is used to estimate chord sequence in multi-timral, polyphonic music.
+Hidden Markov Model - HMM is trained based on music theory according to the paper <i><A HREF = "http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.375.2151&rep=rep1&type=pdf">A Robust Mid-level Representation for Harmonic Content in Music 
+  Signals</a></i> - Juan P. Bello, Proc. of ISMIR, 2005. Viterbi decoding is used to estimate chord sequence in multi-timral, polyphonic music.
 </ol>
