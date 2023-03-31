@@ -18,7 +18,7 @@ Hidden Markov Model - HMM is trained based on music theory according to the pape
 <p> Run main.py with an input file name from data/test_chords/ with flag -m set to the method you want to use for detection, and -p for plotting the result. The default method is template matching. Example:
 
 ```
-python3 main.py -i 'Grand Piano - Fazioli - major E middle.wav' -m hmm -p
+python3 main.py -i 'Grand Piano - Fazioli - major E middle.wav' -m hmm -p True
 ```
 
 For help, run `python3 main.py -h`

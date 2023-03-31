@@ -165,8 +165,14 @@ def find_chords(
 
     if plot:
         plt.figure()
-        plt.yticks(np.arange(num_chords + 1), chords)
-        plt.plot(timestamp, id_chord)
+        if method == "match_template":
+            plt.yticks(np.arange(num_chords + 1), chords)
+            plt.plot(timestamp, id_chord, marker="o")
+
+        else:
+            plt.yticks(np.arange(num_chords), chords)
+            plt.plot(timestamp, np.int32(final_states), marker="o")
+
         plt.xlabel("Time in seconds")
         plt.ylabel("Chords")
         plt.title("Identified chords")
@@ -196,7 +202,7 @@ def main(argv):
             method = arg
             has_method = True
         elif opt in ("-p", "--plot"):
-            plot = True
+            plot = arg
     if not has_method:
         method = "match_template"
 
